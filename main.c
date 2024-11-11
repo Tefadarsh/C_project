@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+#define MAX_SIZE 10
 typedef unsigned char uint8;
 typedef char int8;
 typedef unsigned short uint16;
@@ -25,6 +27,14 @@ struct Node{
     struct Node* pLeft;
 }*pHead=NULL,*pEnd=NULL;
 
+
+uint8 start=1;
+uint8 checker;
+uint32 id;
+uint32 List[10];
+uint8 count;
+
+
 struct Node* createNode();
 uint8 SDB_GetUsedSize();
 bool SDB_IsFull();
@@ -36,35 +46,13 @@ void SDB_GetList(uint8*,uint32*);
 void SDB_APP();
 void SDB_action (uint8);
 
-uint8 start=1;
-uint8 checker;
-uint32 id;
-uint32 List[10];
-uint8 count;
-
 
 int main()
 {
 
-
-      SDB_APP();
-
+    SDB_APP();
 
 
-//    uint32 List[10];
-//    uint8 count=SDB_GetUsedSize();
-//    //SDB_GetList(&count,List);
-//    int id;
-//    SDB_AddEntry();
-////    count=SDB_GetUsedSize();
-////    SDB_GetList(&count,List);
-//    printf("\nEnter the student's id you want to know: ");
-//    scanf("%d",&id);
-////    //SDB_DeletEntry(id);
-//    SDB_ReadEntry(id);
-//    SDB_IsIdExist(id);
-//    printf("\nThe number of students are %d\n", SDB_GetUsedSize());
-//    printf("\nis database is full?%d",SDB_IsFull());
     return 0;
 }
 
@@ -78,6 +66,7 @@ struct Node* createNode(){
         //Initialize the Node's data and pointers
         printf("\nEnter the student ID : ");
         scanf("%d",&pNode->data.Student_ID);
+        //This condition is made to make sure that the user does not enter an ID that is already exist in SDB
         if(SDB_IsIdExist(pNode->data.Student_ID)){
            printf("\nThis ID is already exist in the database\n");
         }
@@ -106,23 +95,16 @@ struct Node* createNode(){
 
 //This function counts how many students are in SDB
 uint8 SDB_GetUsedSize(){
-    uint8 counter=0;
-    if(pHead==NULL){
-        return counter; //if the List is empty then the function returns 0
-    }
-    else{
-        struct Node* Temp=pHead;
-        while(Temp!=NULL){
-            Temp=Temp->pRight;
-            counter++;
-        }
-        return counter;
-    }
+
+
+      return count;
+
+
 }
 
 //This function checks if SDB is full or not
 bool SDB_IsFull(){
-    if(SDB_GetUsedSize()==10){
+    if(SDB_GetUsedSize()==MAX_SIZE){
         return True;
     }
     else{
@@ -152,11 +134,14 @@ bool SDB_AddEntry(){
         pNode->pLeft=pEnd;
         pEnd=pNode;
     }
+    count++;
     return True;
 
 
 }
 
+
+//This function delete a student from SDB by giving his id
 void SDB_DeletEntry(uint32 id){
 
     struct Node* Temp=pHead;
@@ -165,6 +150,7 @@ void SDB_DeletEntry(uint32 id){
         pHead=NULL;
         pEnd=NULL;
         free(Temp);
+        count--;
         return;
     }
     //if the student that will be deleted is the first one
@@ -172,6 +158,7 @@ void SDB_DeletEntry(uint32 id){
         pHead=pHead->pRight;
         pHead->pLeft=NULL;
         free(Temp);
+        count--;
         return;
     }
     //if the student that will be deleted is the last one
@@ -180,6 +167,7 @@ void SDB_DeletEntry(uint32 id){
         pEnd=pEnd->pLeft;
         pEnd->pRight=NULL;
         free(Temp);
+        count--;
         return;
     }
     //if the student that will be deleted is at the middle
@@ -192,6 +180,7 @@ void SDB_DeletEntry(uint32 id){
            Temp->pLeft->pRight=Temp->pRight;
            Temp->pRight->pLeft=Temp->pLeft;
            free(Temp);
+           count--;
            return;
         }
     }
@@ -201,6 +190,7 @@ void SDB_DeletEntry(uint32 id){
 }
 
 
+//This function read student's data by giving student's id
 bool SDB_ReadEntry(uint32 id){
     struct Node* Temp=pHead;
     //searching for a student with an id
@@ -227,7 +217,7 @@ bool SDB_ReadEntry(uint32 id){
     }
 }
 
-
+//This function check if student's id exist in the database by giving student's id
 bool SDB_IsIdExist(uint32 id){
     struct Node* Temp=pHead;
     //searching for a student with an id
@@ -246,6 +236,7 @@ bool SDB_IsIdExist(uint32 id){
 }
 
 
+//This function display all ids that are in the database by giving the address of array and the number of students in SDB
 void SDB_GetList(uint8*count,uint32*List){
     if(*count==0){
         printf("\nThe database is already empty.\n\n");
@@ -264,6 +255,8 @@ void SDB_GetList(uint8*count,uint32*List){
     printf("\n\n");
 }
 
+
+//This function is used to display options to user then takes his choice to call the function responsible for achieving his choice
 void SDB_APP(){
     uint8 choice;
     while(start){
@@ -285,7 +278,7 @@ void SDB_APP(){
 
 void SDB_action (uint8 choice){
 
-    count=SDB_GetUsedSize();
+
     switch(choice){
     case 1:
 
@@ -361,8 +354,14 @@ void SDB_action (uint8 choice){
         break;
 
     default:
+        if(count<3){
+            start=1;
+            printf("\nYou can not exist as the database must contain at least 3 students.\n\n");
+        }
+        else{
+            start=0;
+        }
 
-        start=0;
         break;
 
     }
