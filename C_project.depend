@@ -1,5 +1,23 @@
 # depslib dependency file v1.0
-1731285098 source:c:\users\moustafa yasser\desktop\c_files\c_project\main.c
+1731288064 source:c:\users\moustafa yasser\desktop\c_files\c_project\main.c
 	<stdio.h>
 	<stdlib.h>
+	"SDB.h"
+
+1731288384 c:\users\moustafa yasser\desktop\c_files\c_project\sdb.h
+
+1731287845 c:\users\moustafa yasser\desktop\c_files\c_project\sdbapp.h
+	"typedef.h"
+
+1731287437 source:c:\users\moustafa yasser\desktop\c_files\c_project\sdb.c
+	<stdio.h>
+	<stdlib.h>
+	"SDB.h"
+
+1731288221 source:c:\users\moustafa yasser\desktop\c_files\c_project\sdbapp.c
+	<stdio.h>
+	<stdlib.h>
+	"SDB.h"
+
+1731287845 c:\users\moustafa yasser\desktop\c_files\c_project\typedef.h
 
