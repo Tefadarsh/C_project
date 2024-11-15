@@ -1,6 +1,7 @@
 
 
 #define MAX_SIZE 10
+//#define SDB_GetUsedSize() count
 
 typedef unsigned char uint8;
 typedef char int8;
@@ -43,6 +44,5 @@ void SDB_DeletEntry(uint32);
 bool SDB_ReadEntry(uint32);
 bool SDB_IsIdExist(uint32);
 void SDB_GetList(uint8*,uint32*);
-//void SDB_APP();
-//void SDB_action (uint8);
+
 

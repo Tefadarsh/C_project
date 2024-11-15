@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SDB.h"
-//#include "SDBAPP.h"
+#include "SDBAPP.h"
 
 //This function is used to display options to user then takes his choice to call the function responsible for achieving his choice
 void SDB_APP(){
@@ -59,6 +59,7 @@ void SDB_action (uint8 choice){
 
     case 4:
 
+        count = SDB_GetUsedSize();
         SDB_GetList(&count,List);
         break;
 
@@ -101,7 +102,7 @@ void SDB_action (uint8 choice){
         break;
 
     default:
-        if(count<3){
+        if(SDB_GetUsedSize()<3){
             start=0;
             printf("\nYou can not exist as the database must contain at least 3 students.\n\n");
         }

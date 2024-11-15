@@ -42,10 +42,18 @@ struct Node* createNode(){
 
 //This function counts how many students are in SDB
 uint8 SDB_GetUsedSize(){
-
-
-      return count;
-
+        uint8 counter=0;
+    if(pHead==NULL){
+        return counter; //if the List is empty then the function returns 0
+    }
+    else{
+        struct Node* Temp=pHead;
+        while(Temp!=NULL){
+            Temp=Temp->pRight;
+            counter++;
+        }
+        return counter;
+    }
 
 }
 
@@ -81,7 +89,7 @@ bool SDB_AddEntry(){
         pNode->pLeft=pEnd;
         pEnd=pNode;
     }
-    count++;
+    //count++;
     return True;
 
 
@@ -97,7 +105,7 @@ void SDB_DeletEntry(uint32 id){
         pHead=NULL;
         pEnd=NULL;
         free(Temp);
-        count--;
+        //count--;
         return;
     }
     //if the student that will be deleted is the first one
@@ -114,7 +122,7 @@ void SDB_DeletEntry(uint32 id){
         pEnd=pEnd->pLeft;
         pEnd->pRight=NULL;
         free(Temp);
-        count--;
+        //count--;
         return;
     }
     //if the student that will be deleted is at the middle
@@ -127,7 +135,7 @@ void SDB_DeletEntry(uint32 id){
            Temp->pLeft->pRight=Temp->pRight;
            Temp->pRight->pLeft=Temp->pLeft;
            free(Temp);
-           count--;
+           //count--;
            return;
         }
     }
@@ -185,10 +193,12 @@ bool SDB_IsIdExist(uint32 id){
 
 //This function display all ids that are in the database by giving the address of array and the number of students in SDB
 void SDB_GetList(uint8*count,uint32*List){
+    //if SDB is empty
     if(*count==0){
         printf("\nThe database is already empty.\n\n");
         return;
     }
+    //if SDB has students
     uint8 i;
     struct Node* Temp=pHead;
     for(i=0;i<*count;i++){
